@@ -24,22 +24,20 @@ fromFile filename = do
       , (x, cell) <- zip [0..] row, cell]
   pure $ S.fromList points
 
-near :: Cells -> Point -> [Point]
-near cells point = add point <$> dirs
- where
-  dirs = filter (/= (0, 0)) $ liftA2 (,) [-1..1] [-1..1]
+near :: Point -> [Point]
+near (x, y) = filter (/= (x, y)) $ liftA2 (,) [x - 1..x + 1] [y - 1..y + 1]
 
 shouldLive :: Cells -> Point -> Bool
 shouldLive cells point = (alive && (aliveNear == 2 ||
   aliveNear == 3)) || (not alive && aliveNear == 3)
  where
   alive = S.member point cells
-  aliveNear = length $ filter (`S.member` cells) $ near cells point
+  aliveNear = length $ filter (`S.member` cells) $ near point
 
 possible :: Cells -> [Point]
 possible cells = S.toList cells >>= f
  where
-  f cell = cell : near cells cell
+  f cell = cell : near cell
 
 render :: Cells -> (Int, Int) -> String
 render cells (width, height) = unlines $ concat <$> canvas
