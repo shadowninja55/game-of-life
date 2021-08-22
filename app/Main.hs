@@ -44,7 +44,7 @@ render cells (width, height) = unlines $ concat <$> canvas
     ++ setSGRCode [Reset]
   renderCell False = "  "
   resized = take (height - 2) $ take (width `div` 2 - 1) <$> grid
-  grid = [[S.member (x, y) cells | x <- [minX..maxX]] | y <- [minX..maxY]]
+  grid = [[S.member (x, y) cells | x <- [minX..maxX]] | y <- [minY..maxY]]
 
   minX = minimum $ fst <$> cellList
   maxX = maximum $ fst <$> cellList
