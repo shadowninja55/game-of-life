@@ -12,9 +12,6 @@ import System.Environment (getArgs)
 type Point = (Int, Int)
 type Cells = Set Point
 
-add :: Point -> Point -> Point
-add (x, y) (x', y') = (x + x', y + y')
-
 fromFile :: String -> IO Cells
 fromFile filename = do
   content <- readFile filename
